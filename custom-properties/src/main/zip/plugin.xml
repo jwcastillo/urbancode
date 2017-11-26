@@ -71,4 +71,127 @@
       <arg file="${PLUGIN_OUTPUT_PROPS}"/>
     </command>
   </step-type>
+
+  <step-type name="Import ComponentEnvProperties">
+    <description>Import Component Environment Properties from File</description>
+    <properties>
+      <property name="filename" required="true">
+        <property-ui type="textBox"
+                     label="File Name"
+                     description="file name to import"/>
+      </property>
+      <property name="componentId" required="true">
+        <property-ui type="textBox"
+                     label="Component ID"
+                     description="Component ID"
+                     default-value="${p:component.id}" />
+      </property>
+      <property name="environmentId" required="true">
+        <property-ui type="textBox"
+                     label="Environment ID"
+                     description="Environment ID"
+                     default-value="${p:environment.id}" />
+      </property>
+    </properties>
+    <post-processing>
+      <![CDATA[
+        if (properties.get("exitCode") != 0) {
+            properties.put(new java.lang.String("Status"), new java.lang.String("Failure"));
+        }
+        else {
+            properties.put("Status", "Success");
+        }
+     ]]>
+    </post-processing>
+
+    <command program="${GROOVY_HOME}/bin/groovy">
+      <arg value="-cp"/>
+      <arg path="classes:lib/uDeployRestClient.jar:lib/groovy-plugin-utils-1.0.jar"/>
+      <arg file="importenvprops.groovy"/>
+      <arg file="${PLUGIN_INPUT_PROPS}"/>
+      <arg file="${PLUGIN_OUTPUT_PROPS}"/>
+    </command>
+  </step-type>
+  
+  <step-type name="Export ComponentEnvProperties">
+    <description>Import Component Environment Properties from File</description>
+    <properties>
+      <property name="filename" required="true">
+        <property-ui type="textBox"
+                     label="File Name"
+                     description="file name to import"/>
+      </property>
+      <property name="componentId" required="true">
+        <property-ui type="textBox"
+                     label="Component ID"
+                     description="Component ID"
+                     default-value="${p:component.id}" />
+      </property>
+      <property name="environmentId" required="true">
+        <property-ui type="textBox"
+                     label="Environment ID"
+                     description="Environment ID"
+                     default-value="${p:environment.id}" />
+      </property>
+    </properties>
+    <post-processing>
+      <![CDATA[
+        if (properties.get("exitCode") != 0) {
+            properties.put(new java.lang.String("Status"), new java.lang.String("Failure"));
+        }
+        else {
+            properties.put("Status", "Success");
+        }
+     ]]>
+    </post-processing>
+
+    <command program="${GROOVY_HOME}/bin/groovy">
+      <arg value="-cp"/>
+      <arg path="classes:lib/uDeployRestClient.jar:lib/groovy-plugin-utils-1.0.jar"/>
+      <arg file="exportenvprops.groovy"/>
+      <arg file="${PLUGIN_INPUT_PROPS}"/>
+      <arg file="${PLUGIN_OUTPUT_PROPS}"/>
+    </command>
+  </step-type>
+  
+    <step-type name="Update ComponentEnvProperties">
+    <description>Import Component Environment Properties from File</description>
+    <properties>
+      <property name="changedProperties" required="true">
+        <property-ui type="textAreaBox"
+                     label="Properties"
+                     description="Properties to update"/>
+      </property>
+      <property name="componentId" required="true">
+        <property-ui type="textBox"
+                     label="Component ID"
+                     description="Component ID"
+                     default-value="${p:component.id}" />
+      </property>
+      <property name="environmentId" required="true">
+        <property-ui type="textBox"
+                     label="Environment ID"
+                     description="Environment ID"
+                     default-value="${p:environment.id}" />
+      </property>
+    </properties>
+    <post-processing>
+      <![CDATA[
+        if (properties.get("exitCode") != 0) {
+            properties.put(new java.lang.String("Status"), new java.lang.String("Failure"));
+        }
+        else {
+            properties.put("Status", "Success");
+        }
+     ]]>
+    </post-processing>
+
+    <command program="${GROOVY_HOME}/bin/groovy">
+      <arg value="-cp"/>
+      <arg path="classes:lib/uDeployRestClient.jar:lib/groovy-plugin-utils-1.0.jar"/>
+      <arg file="updateenvprops.groovy"/>
+      <arg file="${PLUGIN_INPUT_PROPS}"/>
+      <arg file="${PLUGIN_OUTPUT_PROPS}"/>
+    </command>
+  </step-type>
 </plugin>

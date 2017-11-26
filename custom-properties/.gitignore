@@ -2,3 +2,8 @@
 build/
 lib/
 .DS_Store
+.project
+.classpath
+.settings
+/.apt_generated/
+/bin
