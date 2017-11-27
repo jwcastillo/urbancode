@@ -2,10 +2,12 @@ package com.ibm.im.custom.props;
 
 import java.io.FileNotFoundException;
 import java.io.FileReader;
-import java.io.FileWriter;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.io.StringReader;
 import java.io.StringWriter;
+import java.io.Writer;
+import java.util.Iterator;
 import java.util.Map.Entry;
 import java.util.Properties;
 
@@ -31,10 +33,10 @@ public class PropertiesHelper {
 	}
 	
 	public String getPropertiesString(Properties p, String comment) throws IOException {
-		StringWriter sw = new StringWriter();
-		p.store(sw, comment);
-
-		return sw.toString();
+		try (StringWriter sw = new StringWriter()) {
+			write(p, sw);
+			return sw.toString();
+		}
 	}
 	
 	public Properties merge(Properties p1, Properties p2) {
@@ -63,10 +65,18 @@ public class PropertiesHelper {
 		}
 	}
 	
-	public static void writeFile(String filename, Properties p) throws IOException {
-		try (FileWriter fw = new FileWriter(filename)) {
-			p.store(fw, null);
+	public void writeFile(String filename, Properties p) throws IOException {
+		try (PrintWriter pw = new PrintWriter(filename)) {
+			write(p, pw);
 		}
 	}
 
+	public void write(Properties p, Writer w) throws IOException {
+		for (Iterator<Entry<Object, Object>> iterator = p.entrySet().iterator(); iterator.hasNext();) {
+			Entry<Object, Object> e = iterator.next();
+			w.write(e.getKey() + "=" + e.getValue());
+			if (iterator.hasNext())
+				w.write("\n");
+		}
+	}
 }

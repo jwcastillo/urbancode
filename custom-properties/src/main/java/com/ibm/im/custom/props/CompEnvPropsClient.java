@@ -9,7 +9,6 @@ import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpDelete;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPut;
-import org.apache.log4j.Logger;
 import org.codehaus.jettison.json.JSONArray;
 import org.codehaus.jettison.json.JSONException;
 import org.codehaus.jettison.json.JSONObject;
@@ -18,7 +17,6 @@ import com.urbancode.ud.client.UDRestClient;
 
 public class CompEnvPropsClient extends UDRestClient {
 
-	private final static Logger log = Logger.getLogger(CompEnvPropsClient.class);
 	private String componentId;
 	private String environmentId;
 
@@ -117,5 +115,4 @@ public class CompEnvPropsClient extends UDRestClient {
 			return "";
 		return o.toString();
 	}
-
 }
