@@ -22,7 +22,7 @@
     </release-note>
 
     <release-note plugin-version="2">
-      Added a name property to the Hello World step
+      Added new step 'Merge Properties'
     </release-note>
   </release-notes>
 </pluginInfo>

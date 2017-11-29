@@ -72,20 +72,23 @@ public class CompEnvPropsClient extends UDRestClient {
         return getBody(response);
 	}
 
-	public void insertProperties(Properties props) throws IOException, JSONException {
+	public Properties insertProperties(Properties props) throws IOException, JSONException {
 		Properties existing = getCurrentProperties();
 		System.out.println("Inserting properties");
 		for (Entry<Object, Object> entry : props.entrySet()) {
 			try {
+				String key = toNotNullString(entry.getKey());
 				if (!existing.containsKey(entry.getKey())) {
 					System.out.println("Entry: '" + entry.getKey() + "' with value: '" + entry.getValue() + "'");
-					insertProperty(toNotNullString(entry.getKey()), toNotNullString(entry.getKey()), toNotNullString(entry.getValue()), PropertiesHelper.UNDEFINED);
+					insertProperty(key, key, toNotNullString(entry.getValue()), PropertiesHelper.UNDEFINED);
 					System.out.println("SAVED!");
 				}
+				entry.setValue(existing.getProperty(key, PropertiesHelper.UNDEFINED));
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
 		}
+		return props;
 	}
 		
 	public void updateProperties(Properties props) {

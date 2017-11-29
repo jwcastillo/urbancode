@@ -12,5 +12,5 @@ final def p2 = props['property2']
 def ph = new PropertiesHelper()
 
 //Store properties in result
-airTool.setOutputProperty('result', ph.merge(p1, p2));
+airTool.setOutputProperty('result', ph.getPropertiesString(ph.merge(ph.readString(p1), ph.readString(p2))));
 airTool.storeOutputProperties();

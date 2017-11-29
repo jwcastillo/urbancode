@@ -32,7 +32,7 @@ public class PropertiesHelper {
 		return result;
 	}
 	
-	public String getPropertiesString(Properties p, String comment) throws IOException {
+	public String getPropertiesString(Properties p) throws IOException {
 		try (StringWriter sw = new StringWriter()) {
 			write(p, sw);
 			return sw.toString();

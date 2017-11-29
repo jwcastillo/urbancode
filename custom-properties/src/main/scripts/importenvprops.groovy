@@ -26,14 +26,12 @@ def compEnv = new CompEnvPropsClient(new URI(weburl), udUser, udPass, componentI
 // Logic start
 def properties = ph.readFile(filename)
 // - insert properties
-compEnv.insertProperties(properties)
-// - load existing properties
-properties = compEnv.getCurrentProperties()
+properties = compEnv.insertProperties(properties)
 
 // - store properties to output
-airTool.setOutputProperty('definedProperties', ph.getPropertiesString(ph.definedProps(properties), null))
-airTool.setOutputProperty('undefinedProperties', ph.getPropertiesString(ph.undefinedProps(properties), null))
-airTool.setOutputProperty('allProperties', ph.getPropertiesString(properties, null))
+airTool.setOutputProperty('definedProperties', ph.getPropertiesString(ph.definedProps(properties)))
+airTool.setOutputProperty('undefinedProperties', ph.getPropertiesString(ph.undefinedProps(properties)))
+airTool.setOutputProperty('allProperties', ph.getPropertiesString(properties))
 
 airTool.storeOutputProperties()
 // Logic end
