@@ -108,6 +108,7 @@ public class CompEnvPropsClient extends UDRestClient {
 		for (Object key : props.keySet()) {
 			try {
 				deleteProperty(toNotNullString(key));
+				System.out.println("Property: '" + key + "' deleted");
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
