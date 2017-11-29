@@ -24,5 +24,8 @@
     <release-note plugin-version="2">
       Added new step 'Merge Properties'
     </release-note>
+    <release-note plugin-version="3">
+      Added new step 'Delete CompEnvProperties'
+    </release-note>
   </release-notes>
 </pluginInfo>

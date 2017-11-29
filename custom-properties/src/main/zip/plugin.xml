@@ -188,8 +188,8 @@
     </command>
   </step-type>
   
-    <step-type name="Update ComponentEnvProperties">
-    <description>Import Component Environment Properties from File</description>
+  <step-type name="Update ComponentEnvProperties">
+    <description>Update Component Environment Properties</description>
     <properties>
       <property name="changedProperties" required="true">
         <property-ui type="textAreaBox"
@@ -224,6 +224,47 @@
       <arg value="-cp"/>
       <arg path="classes:lib/uDeployRestClient.jar:lib/groovy-plugin-utils-1.0.jar"/>
       <arg file="updateenvprops.groovy"/>
+      <arg file="${PLUGIN_INPUT_PROPS}"/>
+      <arg file="${PLUGIN_OUTPUT_PROPS}"/>
+    </command>
+  </step-type>
+  
+  <step-type name="Delete ComponentEnvProperties">
+    <description>Delete Component Environment Properties</description>
+    <properties>
+      <property name="toDel" required="true">
+        <property-ui type="textAreaBox"
+                     label="Properties"
+                     description="'ALL' will delete all properties"/>
+      </property>
+      <property name="componentId" required="true">
+        <property-ui type="textBox"
+                     label="Component ID"
+                     description="Component ID"
+                     default-value="${p:component.id}" />
+      </property>
+      <property name="environmentId" required="true">
+        <property-ui type="textBox"
+                     label="Environment ID"
+                     description="Environment ID"
+                     default-value="${p:environment.id}" />
+      </property>
+    </properties>
+    <post-processing>
+      <![CDATA[
+        if (properties.get("exitCode") != 0) {
+            properties.put(new java.lang.String("Status"), new java.lang.String("Failure"));
+        }
+        else {
+            properties.put("Status", "Success");
+        }
+     ]]>
+    </post-processing>
+
+    <command program="${GROOVY_HOME}/bin/groovy">
+      <arg value="-cp"/>
+      <arg path="classes:lib/uDeployRestClient.jar:lib/groovy-plugin-utils-1.0.jar"/>
+      <arg file="deleteenvprops.groovy"/>
       <arg file="${PLUGIN_INPUT_PROPS}"/>
       <arg file="${PLUGIN_OUTPUT_PROPS}"/>
     </command>

@@ -74,7 +74,8 @@ public class CompEnvPropsClient extends UDRestClient {
 
 	public Properties insertProperties(Properties props) throws IOException, JSONException {
 		Properties existing = getCurrentProperties();
-		System.out.println("Inserting properties");
+		System.out.println("Existing properties count: " + existing.size());
+		System.out.println("Parameter properties count: " + props.size());
 		for (Entry<Object, Object> entry : props.entrySet()) {
 			try {
 				String key = toNotNullString(entry.getKey());
@@ -98,6 +99,16 @@ public class CompEnvPropsClient extends UDRestClient {
 				updateProperty(toNotNullString(entry.getKey()), toNotNullString(entry.getValue()));
 				System.out.println("SAVED!");
 			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+	}
+	
+	public void deleteProperties(Properties props) {
+		for (Object key : props.keySet()) {
+			try {
+				deleteProperty(toNotNullString(key));
+			} catch (IOException e) {
 				e.printStackTrace();
 			}
 		}

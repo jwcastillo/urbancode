@@ -15,15 +15,15 @@ def weburl = System.getenv("AH_WEB_URL")
 com.urbancode.air.XTrustProvider.install()
 
 // Load properties
-def filename = props['filename']
 def componentId = props['componentId']
 def environmentId = props['environmentId']
-def propsToWrite = props['propsToWrite']
+def propsToDel = props['toDel'];
 
 // Helper and client initialization
-def ph = new PropertiesHelper()
 def compEnv = new CompEnvPropsClient(new URI(weburl), udUser, udPass, componentId, environmentId)
 
 // Logic start
-ph.writeFile(filename, propsToWrite)
+if ("ALL".equals(propsToDel))
+	propsToDel = compEnv.getCurrentProperties()
+compEnv.deleteProperties(propsToDel);
 // Logic end

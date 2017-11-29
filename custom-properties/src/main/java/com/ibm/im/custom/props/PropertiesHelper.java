@@ -40,7 +40,10 @@ public class PropertiesHelper {
 	}
 	
 	public Properties merge(Properties p1, Properties p2) {
-		Properties result = new Properties(p1);
+		Properties result = new Properties();
+		for (Entry<Object, Object> e : p1.entrySet()) {
+			result.put(e.getKey(), e.getValue());
+		}
 		
 		for (Entry<Object, Object> e : p2.entrySet()) {
 			result.putIfAbsent(e.getKey(), e.getValue());
