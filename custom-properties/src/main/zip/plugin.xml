@@ -72,6 +72,40 @@
     </command>
   </step-type>
 
+  <step-type name="Merge Properties">
+    <description>Merges 2 properties content into 1 (output property: result)</description>
+    <properties>
+      <property name="property1" required="true">
+        <property-ui type="textAreaBox"
+                     label="Property 1"
+                     description="Content in Properties format"/>
+      </property>
+      <property name="property2" required="true">
+        <property-ui type="textAreaBox"
+                     label="Property 2"
+                     description="Content in Properties format"/>
+      </property>
+    </properties>
+    <post-processing>
+      <![CDATA[
+        if (properties.get("exitCode") != 0) {
+            properties.put(new java.lang.String("Status"), new java.lang.String("Failure"));
+        }
+        else {
+            properties.put("Status", "Success");
+        }
+     ]]>
+    </post-processing>
+
+    <command program="${GROOVY_HOME}/bin/groovy">
+      <arg value="-cp"/>
+      <arg path="classes:lib/groovy-plugin-utils-1.0.jar"/>
+      <arg file="mergeprops.groovy"/>
+      <arg file="${PLUGIN_INPUT_PROPS}"/>
+      <arg file="${PLUGIN_OUTPUT_PROPS}"/>
+    </command>
+  </step-type>
+
   <step-type name="Import ComponentEnvProperties">
     <description>Import Component Environment Properties from File</description>
     <properties>
