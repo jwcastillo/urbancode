@@ -2,6 +2,25 @@
 <plugin-upgrade
         xmlns="http://www.urbancode.com/UpgradeXMLSchema_v1"
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	<migrate to-version="5">
+		<migrate-command name="Export ComponentEnvProperties">
+			<migrate-properties>
+		         <migrate-property name="charset" default="UTF-8" />
+		    </migrate-properties>
+		</migrate-command>
+		<migrate-command name="Export to File">
+			<migrate-properties>
+		         <migrate-property name="charset" default="UTF-8" />
+		    </migrate-properties>
+		</migrate-command>
+	</migrate>
+	<migrate to-version="4">
+		<migrate-command name="Import ComponentEnvProperties">
+			<migrate-properties>
+		         <migrate-property name="charset" default="UTF-8" />
+		    </migrate-properties>
+		</migrate-command>
+	</migrate>
 	<migrate to-version="3">
 	</migrate>
 	<migrate to-version="2">

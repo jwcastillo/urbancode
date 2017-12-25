@@ -19,11 +19,12 @@ def filename = props['filename']
 def componentId = props['componentId']
 def environmentId = props['environmentId']
 def propsToWrite = props['propsToWrite']
+def charset = props['charset']
 
 // Helper and client initialization
 def ph = new PropertiesHelper()
 def compEnv = new CompEnvPropsClient(new URI(weburl), udUser, udPass, componentId, environmentId)
 
 // Logic start
-ph.writeFile(filename, propsToWrite)
+ph.writeFile(filename, propsToWrite, charset)
 // Logic end
