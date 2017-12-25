@@ -2,7 +2,10 @@ package com.ibm.im.custom.props;
 
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
+<<<<<<< HEAD
 import java.io.FileOutputStream;
+=======
+>>>>>>> branch 'master' of https://github.com/makarovivan/urbancode.git
 import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
