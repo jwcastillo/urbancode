@@ -99,7 +99,7 @@
 
     <command program="${GROOVY_HOME}/bin/groovy">
       <arg value="-cp"/>
-      <arg path="classes:lib/groovy-plugin-utils-1.0.jar"/>
+      <arg path="classes:lib/CommonsUtil.jar:lib/groovy-plugin-utils-1.0.jar"/>
       <arg file="mergeprops.groovy"/>
       <arg file="${PLUGIN_INPUT_PROPS}"/>
       <arg file="${PLUGIN_OUTPUT_PROPS}"/>
@@ -113,6 +113,12 @@
         <property-ui type="textBox"
                      label="File Name"
                      description="file name to import"/>
+      </property>
+      <property name="charset" required="true">
+        <property-ui type="textBox"
+                     label="Charset"
+                     description="Example: UTF-8, ISO-8859-1, US-ASCII, UTF-16"
+                     default-value="UTF-8" />
       </property>
       <property name="componentId" required="true">
         <property-ui type="textBox"

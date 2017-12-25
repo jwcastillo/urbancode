@@ -1,15 +1,21 @@
 package com.ibm.im.custom.props;
 
+import java.io.BufferedReader;
 import java.io.FileNotFoundException;
-import java.io.FileReader;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.StringReader;
 import java.io.StringWriter;
 import java.io.Writer;
+import java.nio.charset.Charset;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.Iterator;
 import java.util.Map.Entry;
 import java.util.Properties;
+
+import com.urbancode.commons.util.StringUtil;
 
 public class PropertiesHelper {
 	public final static String UNDEFINED = "[UNDEFINED]";
@@ -52,10 +58,12 @@ public class PropertiesHelper {
 		return result;
 	}
 	
-	public Properties readFile(String filename) throws FileNotFoundException, IOException {
+	public Properties readFile(String filename, String cs) throws FileNotFoundException, IOException {
 		Properties result = new Properties();
-		try (FileReader fr = new FileReader(filename)) {
-			result.load(fr);
+		Charset charset = Charset.forName(cs);
+		Path path = Paths.get(filename);
+		try (BufferedReader br = Files.newBufferedReader(path , charset)) {
+			result.load(br);
 			return result;
 		}
 	}
@@ -77,7 +85,11 @@ public class PropertiesHelper {
 	public void write(Properties p, Writer w) throws IOException {
 		for (Iterator<Entry<Object, Object>> iterator = p.entrySet().iterator(); iterator.hasNext();) {
 			Entry<Object, Object> e = iterator.next();
-			w.write(e.getKey() + "=" + e.getValue());
+			w.write((String) e.getKey());
+			if (!StringUtil.isEmpty((String) e.getValue())) {
+				w.write('=');
+				w.write((String) e.getValue());
+			}
 			if (iterator.hasNext())
 				w.write("\n");
 		}

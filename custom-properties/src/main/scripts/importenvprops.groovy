@@ -18,13 +18,14 @@ com.urbancode.air.XTrustProvider.install()
 def filename = props['filename']
 def componentId = props['componentId']
 def environmentId = props['environmentId']
+def charset = props['charset']
 
 // Helper and client initialization
 def ph = new PropertiesHelper()
 def compEnv = new CompEnvPropsClient(new URI(weburl), udUser, udPass, componentId, environmentId)
 
 // Logic start
-def properties = ph.readFile(filename)
+def properties = ph.readFile(filename, charset)
 // - insert properties
 properties = compEnv.insertProperties(properties)
 
