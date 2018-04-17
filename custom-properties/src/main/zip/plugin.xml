@@ -86,7 +86,7 @@
                      label="Property 1"
                      description="Content in Properties format"/>
       </property>
-      <property name="property2" required="true">
+      <property name="property2">
         <property-ui type="textAreaBox"
                      label="Property 2"
                      description="Content in Properties format"/>
@@ -214,6 +214,11 @@
                      label="Properties"
                      description="Properties to update"/>
       </property>
+      <property name="defProperties">
+        <property-ui type="textAreaBox"
+                     label="Default Properties"
+                     description="Default Properties"/>
+      </property>
       <property name="componentId" required="true">
         <property-ui type="textBox"
                      label="Component ID"
@@ -242,6 +247,47 @@
       <arg value="-cp"/>
       <arg path="classes:lib/uDeployRestClient.jar:lib/groovy-plugin-utils-1.0.jar"/>
       <arg file="updateenvprops.groovy"/>
+      <arg file="${PLUGIN_INPUT_PROPS}"/>
+      <arg file="${PLUGIN_OUTPUT_PROPS}"/>
+    </command>
+  </step-type>
+
+  <step-type name="Get Modified ComponentEnvProperties">
+    <description>Get Modified Component Environment Properties</description>
+    <properties>
+      <property name="defProperties">
+        <property-ui type="textAreaBox"
+                     label="Default Properties"
+                     description="Default Properties"/>
+      </property>
+      <property name="componentId" required="true">
+        <property-ui type="textBox"
+                     label="Component ID"
+                     description="Component ID"
+                     default-value="${p:component.id}" />
+      </property>
+      <property name="environmentId" required="true">
+        <property-ui type="textBox"
+                     label="Environment ID"
+                     description="Environment ID"
+                     default-value="${p:environment.id}" />
+      </property>
+    </properties>
+    <post-processing>
+      <![CDATA[
+        if (properties.get("exitCode") != 0) {
+            properties.put(new java.lang.String("Status"), new java.lang.String("Failure"));
+        }
+        else {
+            properties.put("Status", "Success");
+        }
+     ]]>
+    </post-processing>
+
+    <command program="${GROOVY_HOME}/bin/groovy">
+      <arg value="-cp"/>
+      <arg path="classes:lib/uDeployRestClient.jar:lib/groovy-plugin-utils-1.0.jar"/>
+      <arg file="getmodifiedprops.groovy"/>
       <arg file="${PLUGIN_INPUT_PROPS}"/>
       <arg file="${PLUGIN_OUTPUT_PROPS}"/>
     </command>
@@ -283,6 +329,45 @@
       <arg value="-cp"/>
       <arg path="classes:lib/uDeployRestClient.jar:lib/groovy-plugin-utils-1.0.jar"/>
       <arg file="deleteenvprops.groovy"/>
+      <arg file="${PLUGIN_INPUT_PROPS}"/>
+      <arg file="${PLUGIN_OUTPUT_PROPS}"/>
+    </command>
+  </step-type>
+  
+  <step-type name="Replace chars">
+    <description>Replaces chars in a given string</description>
+    <properties>
+      <property name="value" required="true">
+        <property-ui type="textBox"
+                     label="Value"
+                     description="Value to Change" />
+      </property>
+      <property name="input" required="true">
+        <property-ui type="textAreaBox"
+                     label="Strings to change"
+                     description="Strings to change, new line means next input string. For example '[.]'"/>
+      </property>
+      <property name="output" required="true">
+        <property-ui type="textBox"
+                     label="Replace by"
+                     description="String replaced by"/>
+      </property>
+    </properties>
+    <post-processing>
+      <![CDATA[
+        if (properties.get("exitCode") != 0) {
+            properties.put(new java.lang.String("Status"), new java.lang.String("Failure"));
+        }
+        else {
+            properties.put("Status", "Success");
+        }
+     ]]>
+    </post-processing>
+
+    <command program="${GROOVY_HOME}/bin/groovy">
+      <arg value="-cp"/>
+      <arg path="classes:lib/uDeployRestClient.jar:lib/groovy-plugin-utils-1.0.jar"/>
+      <arg file="replacestring.groovy"/>
       <arg file="${PLUGIN_INPUT_PROPS}"/>
       <arg file="${PLUGIN_OUTPUT_PROPS}"/>
     </command>

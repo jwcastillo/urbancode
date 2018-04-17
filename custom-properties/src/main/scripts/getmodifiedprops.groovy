@@ -15,19 +15,22 @@ def weburl = System.getenv("AH_WEB_URL")
 com.urbancode.air.XTrustProvider.install()
 
 // Load properties
-def envProps = props['changedProperties']
 def defProps = props['defProperties']
 def componentId = props['componentId']
 def environmentId = props['environmentId']
 
+// client initialization
 // Helper and client initialization
 def ph = new PropertiesHelper()
+
 def compEnv = new CompEnvPropsClient(new URI(weburl), udUser, udPass, componentId, environmentId)
 
 // Logic start
-def envPropsObj = ph.readString(envProps)
-def defPropsObj = ph.readString(defProps)
-// - update properties
-compEnv.updateProperties(envPropsObj, defPropsObj)
+// - insert properties
+properties = compEnv.getModifiedProperties(ph.readString(defProps))
 
+// - store properties to output
+airTool.setOutputProperty('result', ph.getPropertiesString(properties))
+
+airTool.storeOutputProperties()
 // Logic end

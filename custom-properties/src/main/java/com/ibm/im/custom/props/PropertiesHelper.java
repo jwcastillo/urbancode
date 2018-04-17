@@ -19,12 +19,13 @@ import java.util.Properties;
 import com.urbancode.commons.util.StringUtil;
 
 public class PropertiesHelper {
-	public final static String UNDEFINED = "[UNDEFINED]";
+	public final static String EMPTY = "";
+	public static final String UNDEFINED = "-undefined-";
 
 	public Properties definedProps(Properties props) {
 		Properties result = new Properties();
 		for (Entry<Object, Object> entry : props.entrySet()) {
-			if (!UNDEFINED.equals(entry.getValue()))
+			if (!EMPTY.equals(entry.getValue()))
 				result.put(entry.getKey(), entry.getValue());
 		}
 		return result;
@@ -33,7 +34,7 @@ public class PropertiesHelper {
 	public Properties undefinedProps(Properties props) {
 		Properties result = new Properties();
 		for (Entry<Object, Object> entry : props.entrySet()) {
-			if (UNDEFINED.equals(entry.getValue()))
+			if (EMPTY.equals(entry.getValue()))
 				result.put(entry.getKey(), entry.getValue());
 		}
 		return result;
@@ -80,13 +81,14 @@ public class PropertiesHelper {
 	public void writeFile(String filename, Properties p, String charset) throws IOException {
 		try (FileOutputStream fos = new FileOutputStream(filename);
 			Writer w = new OutputStreamWriter(fos, charset)) {
-			write(p, w);
+			write(definedProps(p), w);
 		}
 	}
 
 	public void write(Properties p, Writer w) throws IOException {
 		for (Iterator<Entry<Object, Object>> iterator = p.entrySet().iterator(); iterator.hasNext();) {
 			Entry<Object, Object> e = iterator.next();
+			System.out.println(e.getKey() + "=" + e.getValue());
 			w.write((String) e.getKey());
 			if (!StringUtil.isEmpty((String) e.getValue())) {
 				w.write('=');

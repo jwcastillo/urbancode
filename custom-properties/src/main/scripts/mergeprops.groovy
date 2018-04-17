@@ -12,5 +12,14 @@ final def p2 = props['property2']
 def ph = new PropertiesHelper()
 
 //Store properties in result
-airTool.setOutputProperty('result', ph.getPropertiesString(ph.merge(ph.readString(p1), ph.readString(p2))));
+def merged;
+if (p2 != null && p2.trim().empty) {
+	merged = ph.readString(p1);
+} else {
+	merged = ph.merge(ph.readString(p1), ph.readString(p2))
+}
+airTool.setOutputProperty('result', ph.getPropertiesString(merged))
+airTool.setOutputProperty('definedProperties', ph.getPropertiesString(ph.definedProps(merged)))
+airTool.setOutputProperty('undefinedProperties', ph.getPropertiesString(ph.undefinedProps(merged)))
+
 airTool.storeOutputProperties();
