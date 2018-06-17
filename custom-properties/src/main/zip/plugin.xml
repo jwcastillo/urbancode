@@ -16,6 +16,12 @@
                      label="File Name"
                      description="file name to read"/>
       </property>
+      <property name="charset" required="true">
+        <property-ui type="textBox"
+                     label="Charset"
+                     description="Example: UTF-8, ISO-8859-1, US-ASCII, UTF-16" 
+                     default-value="UTF-8"/>
+      </property>
     </properties>
     <post-processing>
       <![CDATA[

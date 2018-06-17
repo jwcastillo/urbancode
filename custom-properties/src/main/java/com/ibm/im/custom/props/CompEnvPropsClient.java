@@ -70,6 +70,8 @@ public class CompEnvPropsClient extends UDRestClient {
                 + "&value=" + encodePath(value)
                 + "&component=" + encodePath(componentId)
                 + "&environment=" + encodePath(environmentId);
+		if (name.toUpperCase().contains("PASSWORD"))
+			uri += "$isSecure=true";
 
         HttpPut method = new HttpPut(uri);
         System.out.println(uri);
@@ -138,7 +140,11 @@ public class CompEnvPropsClient extends UDRestClient {
 							if (!existing.get(key).equals(chgValue))
 								updateProperty(key, chgValue);
 						} else {
-							insertProperty(key, key, defValue);
+							try {
+								insertProperty(key, key, defValue);
+							} catch (Exception e) {
+								System.out.println("Property already exist");
+							}
 							updateProperty(key, chgValue);
 						}
 					} else {

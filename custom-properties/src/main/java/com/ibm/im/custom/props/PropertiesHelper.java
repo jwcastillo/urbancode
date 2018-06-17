@@ -12,7 +12,10 @@ import java.nio.charset.Charset;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Map.Entry;
 import java.util.Properties;
 
@@ -86,9 +89,20 @@ public class PropertiesHelper {
 	}
 
 	public void write(Properties p, Writer w) throws IOException {
-		for (Iterator<Entry<Object, Object>> iterator = p.entrySet().iterator(); iterator.hasNext();) {
+		List<Entry<Object, Object>> l = new ArrayList<>(p.entrySet());
+		l.sort(new Comparator<Entry<Object, Object>>() {
+
+			@Override
+			public int compare(Entry<Object, Object> o1, Entry<Object, Object> o2) {
+				String k1 = (String) o1.getKey();
+				String k2 = (String) o2.getKey();
+				return k1.compareTo(k2);
+			}
+
+		});
+		for (Iterator<Entry<Object, Object>> iterator = l.iterator(); iterator.hasNext();) {
 			Entry<Object, Object> e = iterator.next();
-			System.out.println(e.getKey() + "=" + e.getValue());
+//			System.out.println(e.getKey() + "=" + e.getValue());
 			w.write((String) e.getKey());
 			if (!StringUtil.isEmpty((String) e.getValue())) {
 				w.write('=');

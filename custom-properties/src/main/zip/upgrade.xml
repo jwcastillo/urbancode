@@ -2,7 +2,13 @@
 <plugin-upgrade
         xmlns="http://www.urbancode.com/UpgradeXMLSchema_v1"
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-   <migrate to-version="8">
+   <migrate to-version="9">
+		<migrate-command name="Read File">
+			<migrate-properties>
+		         <migrate-property name="charset" default="UTF-8"/>
+		    </migrate-properties>
+		</migrate-command>
+	</migrate>   <migrate to-version="8">
 		<migrate-command name="Update ComponentEnvProperties">
 			<migrate-properties>
 		         <migrate-property name="changedProperties"/>

@@ -27,5 +27,8 @@
     <release-note plugin-version="3">
       Added new step 'Delete CompEnvProperties'
     </release-note>
+    <release-note plugin-version="9">
+      Added charset property to Read File step
+    </release-note>
   </release-notes>
 </pluginInfo>
